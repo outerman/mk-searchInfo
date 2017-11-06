@@ -1,0 +1,99 @@
+.mk-app-product-list-noData {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.mk-app-product-list {
+    width: 100%;
+    height: 100%;
+    padding: 10px;
+    overflow: auto;
+    
+    &-search {
+        width: 500px;
+        
+        .ant-input  {
+            height: 36px;
+        }
+    }
+    
+    &-content {
+        width: 100% !important;
+        height: initial !important;
+        position: static !important;
+        transform: none !important;
+
+        .mk-app-product-list-title {
+            display: block;
+            font-size: 20px;
+            text-decoration: underline;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+            text-align: left;
+        }
+        
+        .mk-app-product-list-productContent {
+            display: flex;
+            width: 100%;
+            
+            .mk-app-product-list-details {
+                padding: 10px 0 0;
+                max-height: 100px;
+                word-break: break-all;
+                text-overflow: ellipsis;
+                display: -webkit-box; /** 对象作为伸缩盒子模型显示 **/
+                -webkit-box-orient: vertical; /** 设置或检索伸缩盒对象的子元素的排列方式 **/
+                -webkit-line-clamp: 5; /** 显示的行数 **/
+                overflow: hidden;  /** 隐藏超出的内容 **/
+                
+                b {
+                    font-weight: 400;
+                    color: red;
+                }
+            }
+        }  
+    }
+    
+    .react-grid-item {
+        
+        .ant-card-body {
+            padding: 10px;
+        }
+        img {
+            max-width: 150px;
+            max-height: 150px;
+        }
+    }
+    &-item {
+        width: 100%;
+        text-align: left;
+        padding: 10px;
+        
+        &-url {
+            display: block;
+            padding-top: 10px;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            width: 100%;
+        }
+    }
+
+    &-products {
+        overflow: auto;
+        height: initial !important;
+        
+        .ant-card-bordered {
+            border: none;
+        }
+    }
+
+    &-footer{
+		height: 58px;
+	    flex: 0 0 58px;
+		justify-content:center;
+		align-items:center;
+	}
+}
