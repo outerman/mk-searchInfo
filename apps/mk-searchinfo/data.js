@@ -90,9 +90,9 @@ export function getMeta() {
 			children: [{
 				name: 'pagination',
 				component: 'Pagination',
-				pageSize: 10086, //'{{data.pagination.pageSize}}',
-				current: 1, //'{{data.pagination.current}}',
-				total: '{{data.hits.length}}',
+				pageSize: '{{data.pagination.pageSize}}',
+				current: '{{data.pagination.current}}',
+				total: '{{data.pagination.total}}',
 				onChange: '{{$pageChanged}}',
 				onShowSizeChange: '{{$pageChanged}}'
 			}]
@@ -110,3 +110,6 @@ export function getInitState() {
 		}
 	}
 }
+
+//每页默认条数
+export const pageSize = 8

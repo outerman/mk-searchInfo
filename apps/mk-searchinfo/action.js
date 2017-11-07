@@ -1,6 +1,7 @@
 import React from 'react'
 import { action as MetaAction, AppLoader } from 'mk-meta-engine'
 import config from './config'
+import { pageSize } from './data'
 
 class action {
     constructor(option) {
@@ -17,9 +18,14 @@ class action {
 //        this.load(pagination)
     }
 
-    load = async (ret) =>{
+    load = async (key, currentPage, pageSize) =>{
+        let ret = {
+                "q": key,
+                "size": pageSize,
+                "from": (currentPage - 1) * pageSize
+            }
         const response = await this.webapi.search.query(ret)
-        if(!response.hits.hits.length) {
+        if(!response.value.hits.length) {
             this.metaAction.toast('error', '暂无结果')
             return
         }
@@ -39,25 +45,15 @@ class action {
         } 
         
         if(key == 'searchKey') {
-            let pagination = this.metaAction.gf('data.pagination').toJS(),
-            ret = {
-                query: {match: {
-                    content: e
-                }},
-                highlight: {
-                    pre_tags: ['<b>'],
-                    post_tags: ['</b>'],
-                    fields: {
-                        content: {}
-                    }
-                }
-            }
-            this.load(ret)
+            this.load(e, 1, pageSize)
         }
     }
 
-    pageChanged = (current, pageSize) => {
-//        this.load({ current, pageSize })
+    pageChanged = (current) => {
+        this.injections.reduce('changeSearch', 'page', current)
+        
+        let key = this.metaAction.gf('data.searchKey')
+        this.load(key, current, pageSize)
     }
 
     getLayout = () => {
