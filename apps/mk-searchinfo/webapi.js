@@ -8,6 +8,6 @@ import { fetch } from 'mk-utils'
 
 export default {
     search: {
-        query: (option) => fetch.post('/_search', option)
+        query: (option) => fetch.post('/v1/search/search', option)
     }
 }

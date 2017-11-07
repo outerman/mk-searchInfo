@@ -1,7 +1,7 @@
 import { Map, fromJS } from 'immutable'
 import { reducer as MetaReducer } from 'mk-meta-engine'
 import config from './config'
-import { getInitState } from './data'
+import { getInitState, pageSize } from './data'
 
 class reducer {
     constructor(option) {
@@ -14,20 +14,23 @@ class reducer {
         return this.metaReducer.init(state, initState)
     }
 
-    load = (state, {hits, _shards}) => {
+    load = (state, {value}) => {
         let allInfo = [],
             pagination = {
-                current: 1,
-                total: hits.hits.length,
-                pagiSize: 8
+                current: this.metaReducer.gf(state, 'data.page') || 1,
+                total: value.total,
+                pageSize: pageSize
             }
-        hits.hits.map(o => {
+        value.hits.map(o => {
+            if (!o || !o.highlight) {
+                return
+            }
             allInfo.push({
                 __html: o.highlight.content
             })
         })
         
-        state = this.metaReducer.sf(state, 'data.hits', fromJS(hits.hits))
+        state = this.metaReducer.sf(state, 'data.hits', fromJS(value.hits))
         state = this.metaReducer.sf(state, 'data.allInfo', fromJS(allInfo))
         state = this.metaReducer.sf(state, 'data.pagination', fromJS(pagination))
         return state
@@ -37,7 +40,6 @@ class reducer {
         state = this.metaReducer.sf(state, 'data.' + key, value)
         return state
     }
-
 }
 
 export default function creator(option) {
