@@ -6,11 +6,11 @@ var _options = {}
 
 //配置fetch
 fetch.config({
-	mock: true, //脱离后台测试，启用mock，否则这行注释
+	mock: false, //脱离后台测试，启用mock，否则这行注释
 
 	//fetch支持切面扩展（before,after），对restful api统一做返回值或者异常处理
 	after: (response, url) => {
-        if(/_search/.test(url)){
+        if(/search/.test(url)){
             return response
         }
 		if (response.result) {
